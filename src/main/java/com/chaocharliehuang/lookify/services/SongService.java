@@ -1,6 +1,7 @@
 package com.chaocharliehuang.lookify.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,13 @@ public class SongService {
 		if (songRepository.exists(id)) {
 			songRepository.delete(id);;
 		}
+	}
+	
+	public List<Song> findSongByArtist(String artist) {
+		return songRepository.findByArtistContaining(artist);
+	}
+	
+	public List<Song> findTopSongs() {
+		return songRepository.findTop10ByOrderByRatingDesc();
 	}
 }

@@ -1,12 +1,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Dashboard</title>
+	<title>Search</title>
 	<style>
 		table {
 		    border-collapse: collapse;
@@ -25,16 +24,15 @@
 	</style>
 </head>
 <body>
-	<p><a href="/songs/new">Add New</a></p>
-	<p><a href="/songs/top">Top Songs</a></p>
+	<p><a href="/dashboard">Dashboard</a></p>
 	
 	<form action="/search" method="POST">
-		<input type="text" name="artist">  
-		<input type="submit" value="Search Artist">
+		<input type="text" name="artist" value="${artist}">  
+		<input type="submit" value="New Search">
 	</form>
 	
-	<br>
-
+	<p>Songs by artist: <c:out value="${artist}"/></p>
+	
 	<c:if test="${!empty songs}">
 		<table>
 			<tr>
