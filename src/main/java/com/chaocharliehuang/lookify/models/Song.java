@@ -32,8 +32,6 @@ public class Song {
 	private String artist;
 	
 	@Column
-	@Min(1)
-	@Max(10)
 	private int rating;
 	
 	@Column

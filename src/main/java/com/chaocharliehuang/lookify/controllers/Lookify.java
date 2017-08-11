@@ -31,7 +31,10 @@ public class Lookify {
 	}
 	
 	@GetMapping("/dashboard")
-	public String dashboard(Model model) {
+	public String dashboard(
+			@ModelAttribute("song") Song song,
+			BindingResult result,
+			Model model) {
 		model.addAttribute("songs", songService.getAllSongs());
 		return "dashboard.jsp";
 	}
@@ -69,15 +72,28 @@ public class Lookify {
 	}
 	
 	@GetMapping("/search/{artist}")
-	public String displaySearchResults(@PathVariable("artist") String artist, Model model) {
+	public String displaySearchResults(
+			@PathVariable("artist") String artist,
+			@ModelAttribute("song") Song song,
+			BindingResult result,
+			Model model) {
 		model.addAttribute("artist", artist);
 		model.addAttribute("songs", songService.findSongByArtist(artist));
 		return "search.jsp";
 	}
 	
 	@PostMapping("/search")
-	public String searchArtist(@RequestParam(value="artist") String artist) {
-		return "redirect:/search/" + artist;
+	public String searchArtist(
+			@RequestParam(value="artist") String artist,
+			@Valid @ModelAttribute("song") Song song,
+			BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("songs", songService.getAllSongs());
+			return "dashboard.jsp";
+		} else {
+			return "redirect:/search/" + artist;
+		}
 	}
 	
 	@GetMapping("/songs/top")
